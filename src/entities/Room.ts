@@ -12,6 +12,7 @@ import {
 import Message from "./Message";
 import { ObjectType, Field, ID } from "type-graphql";
 import User from "./User";
+import RoomUser from "./RoomUser";
 
 @ObjectType()
 @Entity()
@@ -24,10 +25,9 @@ class Room extends BaseEntity {
   @OneToMany((type) => Message, (message) => message.room)
   messages: Message[];
 
-  @Field(() => [User])
-  @ManyToMany((type) => User, (user) => user.rooms)
-  @JoinTable()
-  participants: User[];
+  @Field(() => [RoomUser])
+  @OneToMany((type) => RoomUser, (roomUser) => roomUser.room)
+  userConnection: Promise<RoomUser[]>;
 
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;

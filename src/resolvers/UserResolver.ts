@@ -1,5 +1,6 @@
 import { Field, InputType, Resolver, Mutation, Arg, Query, ArgsType, Args, ID } from "type-graphql";
 import User from "../entities/User";
+import RoomUser from "../entities/RoomUser";
 
 @InputType()
 class CreateUserInput {
@@ -31,7 +32,9 @@ export class UserResolver {
 
   @Mutation(() => Boolean)
   async deleteUser(@Arg("id", () => ID) id: string) {
+    await RoomUser.delete({ userId: id });
     await User.delete({ id });
+
     return true;
   }
 

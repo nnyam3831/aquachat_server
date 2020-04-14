@@ -2,6 +2,7 @@ import { Resolver, Mutation, InputType, Field, Arg, Query, Args, ArgsType, ID } 
 import Room from "../entities/Room";
 import User from "../entities/User";
 import { createQueryBuilder } from "typeorm";
+import RoomUser from "../entities/RoomUser";
 
 @InputType()
 class CreateRoomInput {
@@ -20,33 +21,19 @@ class AddRoomUserInput {
 @Resolver()
 export class RoomResolver {
   @Mutation(() => Room)
-  async createRoom(@Arg("options", () => CreateRoomInput) options: CreateRoomInput) {
-    const master = await User.find({ username: options.master });
-    console.log(master);
-    if (master === null || master === undefined) return null;
-    const room = await Room.create({ participants: master }).save();
-    return room;
+  async createRoom() {
+    return Room.create().save();
   }
 
-  @Mutation(() => Room)
-  async addRoomUser(@Args() args: AddRoomUserInput) {
-    const { chatRoomId, targetId } = args;
-    // const room = await Room.findOne({ where: { id: chatRoomId }, relations: ["participants"] });
-    const room = await Room.findOne({ where: { id: chatRoomId }, relations: ["participants"] });
-    const newUser = await User.findOne({ where: { id: targetId }, relations: ["rooms"] });
-    let participants = room?.participants;
-
-    if (newUser) {
-      participants = participants?.concat(newUser);
-      console.log(newUser);
-    }
-
-    await Room.update({ id: chatRoomId }, { participants });
-    return room;
+  @Mutation(() => Boolean)
+  async deleteRoom(@Arg("roomId") roomId: string) {
+    await RoomUser.delete({ roomId });
+    await Room.delete({ id: roomId });
+    return true;
   }
   @Query(() => [Room])
   async getRooms() {
-    const room = await Room.find({ relations: ["participants", "messages"] });
+    const room = await Room.find({ relations: ["messages"] });
     return room;
   }
 }

@@ -32,7 +32,7 @@ export class MessageResolver {
   }
   @Query(() => [Message])
   async getMessages() {
-    const messages = await Message.find({ relations: ["user"] });
+    const messages = await Message.find({ relations: ["user", "room"] });
     return messages;
   }
 }
