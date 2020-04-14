@@ -18,6 +18,9 @@ const PORT: number | string = process.env.PORT || 4000;
     schema: await buildSchema({
       resolvers: [__dirname + "/resolvers/**/*.ts"],
     }),
+    context: ({ req, res }) => {
+      return { req, res };
+    },
   });
   app.use(logger("dev"));
   app.use(cors());
