@@ -1,4 +1,4 @@
-import { Resolver, Mutation, ArgsType, ID, Field, Args } from "type-graphql";
+import { Resolver, Mutation, ArgsType, ID, Field, Args, Query } from "type-graphql";
 import RoomUser from "../../entities/RoomUser";
 
 @ArgsType()
@@ -17,10 +17,13 @@ export class RoomUserResolver {
     const { roomId, userId } = args;
     const isExist = await RoomUser.findOne({ roomId, userId });
     if (isExist) {
-      console.log("이미 있어유");
       return isExist;
     }
     const roomUser = await RoomUser.create({ roomId, userId }).save();
     return roomUser;
+  }
+  @Query(() => [RoomUser])
+  async getRoomUser() {
+    return RoomUser.find({ relations: ["user", "room"] });
   }
 }

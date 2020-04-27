@@ -22,11 +22,13 @@
     "cors": "2.8.5",
     "dotenv": "8.2.0",
     "express": "4.17.1",
+    "graphql": "14.1.1",
     "graphql-tools": "4.0.7",
     "graphql-yoga": "1.18.3",
     "helmet": "3.22.0",
     "morgan": "1.10.0",
     "reflect-metadata": "0.1.13",
+    "subscriptions-transport-ws": "0.9.16",
     "type-graphql": "0.17.6",
     "typeorm": "0.2.24"
   },

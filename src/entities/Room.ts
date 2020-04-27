@@ -8,6 +8,7 @@ import {
   ManyToMany,
   JoinColumn,
   JoinTable,
+  Column,
 } from "typeorm";
 import Message from "./Message";
 import { ObjectType, Field, ID } from "type-graphql";

@@ -7,6 +7,7 @@ import {
   Entity,
   Column,
   ManyToMany,
+  JoinColumn,
 } from "typeorm";
 import Room from "./Room";
 import { ObjectType, Field, ID } from "type-graphql";
@@ -21,6 +22,7 @@ class Message extends BaseEntity {
 
   @Field(() => Room)
   @ManyToOne((type) => Room, (room) => room.messages, { nullable: false, onDelete: "CASCADE" })
+  @JoinColumn()
   room: Room;
 
   @Field(() => User)
@@ -30,6 +32,10 @@ class Message extends BaseEntity {
   @Field()
   @Column({ type: "text" })
   text: String;
+
+  @Field()
+  @Column({ type: "boolean" })
+  isNotif: Boolean;
 
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;

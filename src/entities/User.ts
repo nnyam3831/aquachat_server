@@ -24,6 +24,25 @@ class User extends BaseEntity {
   @Column({ type: "text", unique: true })
   username: String;
 
+  @Field()
+  @Column({ type: "text" })
+  email: String;
+
+  @Field()
+  @Column({ type: "text" })
+  gender: String;
+
+  @Field(() => String, {
+    nullable: true,
+  })
+  @Column({
+    type: "text",
+    nullable: true,
+    default:
+      "http://icons.iconarchive.com/icons/papirus-team/papirus-status/256/avatar-default-icon.png",
+  })
+  avatar: String;
+
   @Field(() => [RoomUser])
   @OneToMany((type) => RoomUser, (roomUser) => roomUser.user)
   roomConnection: Promise<RoomUser[]>;
