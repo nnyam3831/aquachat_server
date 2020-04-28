@@ -1,6 +1,16 @@
 # Aqua Chat Server
 
-## GraphQL + Typegraphql
+## Project Stack
+
+- Node.js
+- Express
+- TypeScript
+- GraphQL
+- PostgresQL
+- TypeORM
+- Type-GraphQL
+
+## API
 
 ### User
 
@@ -11,7 +21,7 @@
 
 ### Room
 
-- [ ] Search Room
+- [x] Search Room
 - [x] Create Room
 - [x] Delete Room
 - [x] Invite Room
@@ -19,5 +29,10 @@
 ### Message
 
 - [x] Send Message
-- [ ] Delete Message
-- [ ] New Message(sub)
+- [x] Delete Message
+- [x] Get Message
+
+### Subscription
+
+- [x] New Message
+- [x] New Room
